@@ -15,7 +15,6 @@ class Disposisi extends CI_Controller
     $this->m_security->check();
     $data["judul"] = "Disposisi Arsip";
     $data["konten"] = "pages/surat/disposisi_list";
-
     $data["surat"] = $this->m_disposisi->get_unprocessed($this->session->userdata("nip"));
 
     return $this->load->view("index", $data);

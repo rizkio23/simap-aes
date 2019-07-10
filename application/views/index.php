@@ -55,19 +55,19 @@
   <script src="<?php echo base_url().'assets/js/front.js'; ?>"></script>
   <!-- GET NAME FROM NIP -->
   <script type="text/javascript">
-  function gen_id(tgl_l, tgl_p, jk) {
-    $.ajax({
-      url: '<?php echo base_url()."index.php/master/gen_id_peg"; ?>',
-      type: 'POST',
-      data: {'tgl_l': tgl_l, 'tgl_p': tgl_p, 'jk': jk},
-      success: function(result) {
-        $('#nip').val(result);
-      },
-      error: function(xhr, status, error) {
-        console.log(error);
-      }
-    });
-  }
+    function gen_id(tgl_l, tgl_p, jk) {
+      $.ajax({
+        url: '<?php echo base_url()."index.php/master/gen_id_peg"; ?>',
+        type: 'POST',
+        data: {'tgl_l': tgl_l, 'tgl_p': tgl_p, 'jk': jk},
+        success: function(result) {
+          $('#nip').val(result);
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    }
   </script>
   <!-- GENERATE NIP -->
   <script type="text/javascript">
@@ -99,39 +99,83 @@
   </script>
   <!-- GET RETENSI/INAKTIF -->
   <script type="text/javascript">
-  $(document).ready(function() {
-    $('#jenis').change(function(event) {
-      var tgl_masuk = $('#tgl_masuk').val();
-      var jenis = $(this).val();
-      // ambil masa aktif surat
-      $.ajax({
-        url: '<?php echo base_url()."index.php/surat/jadwal_inaktif/"; ?>' + jenis + "/" + tgl_masuk,
-        type: 'GET',
-        success: function(result) {
-          $('#inaktif').val(result);
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
-      // ambil masa retensi surat
-      $.ajax({
-        url: '<?php echo base_url()."index.php/surat/jadwal_retensi/"; ?>' + jenis  + "/" + tgl_masuk,
-        type: 'GET',
-        success: function(result) {
-          $('#retensi').val(result);
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
+    $(document).ready(function() {
+      $('#jenis').change(function(event) {
+        var tgl_masuk = $('#tgl_masuk').val();
+        var jenis = $(this).val();
+        // ambil masa aktif surat
+        $.ajax({
+          url: '<?php echo base_url()."index.php/surat/jadwal_inaktif/"; ?>' + jenis + "/" + tgl_masuk,
+          type: 'GET',
+          success: function(result) {
+            $('#inaktif').val(result);
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+        // ambil masa retensi surat
+        $.ajax({
+          url: '<?php echo base_url()."index.php/surat/jadwal_retensi/"; ?>' + jenis  + "/" + tgl_masuk,
+          type: 'GET',
+          success: function(result) {
+            $('#retensi').val(result);
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
       });
     });
-  });
   </script>
-	<!-- DATATABLE -->
-	<!-- <script src="<?php echo base_url().'assets/js/jquery.dataTables.min.js'; ?>"></script>
-	<script src="<?php echo base_url().'assets/js/jquery.dataTables.bootstrap.min.js'; ?>"></script>
- 	<script src="<?php echo base_url().'assets/js/dataTables.tableTools.min.js'; ?>"></script>
-	<script src="<?php echo base_url().'assets/js/dataTables.colVis.min.js'; ?>"></script> -->
+  <!-- PENGGUNA -->
+  <script type="text/javascript">
+    function lihat(id) {
+      $.ajax({
+        url: '<?php echo base_url()."index.php/pengguna/lihat/" ?>' + id,
+        type: 'GET',
+        success: function(result) {
+          $('#lihat').html(result);
+        },
+        error: function(xhr, status, error) {
+          $('#lihat').html("Terjadi kesalahan!");
+        }
+      })
+    }
+
+    function edit(id) {
+      $.ajax({
+        url: '<?php echo base_url()."index.php/pengguna/edit/" ?>' + id,
+        type: 'GET',
+        success: function(result) {
+          $('#edit').html(result);
+        },
+        error: function(xhr, status, error) {
+          $('#edit').html("Terjadi kesalahan!");
+        }
+      })
+    }
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#btn-simpan').attr('disabled', true);
+      $('#nip').change(function() {
+        var nip = $(this).val();
+        $.ajax({
+          url: '<?php echo base_url()."index.php/pengguna/cari_karyawan"; ?>',
+          type: 'POST',
+          data: {'nip': nip},
+          success: function(result) {
+            $('#nama').val(result);
+            $('#btn-simpan').attr('disabled', false);
+          },
+          error: function(xhr, status, error) {
+            $('#nama').val('');
+            $('#btn-simpan').attr('disabled', true);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

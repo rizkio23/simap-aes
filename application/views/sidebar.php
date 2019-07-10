@@ -10,8 +10,6 @@
 				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/unit_kerja' ?>" class="sidebar-link text-muted pl-lg-5">Unit Kerja</a></li>
 				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/pegawai'; ?>" class="sidebar-link text-muted pl-lg-5">Pegawai</a></li>
 				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/jenis_surat'; ?>" class="sidebar-link text-muted pl-lg-5">Jenis Surat</a></li>
-				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/lokasi'; ?>" class="sidebar-link text-muted pl-lg-5">Lokasi</a></li>
-				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/media'; ?>" class="sidebar-link text-muted pl-lg-5">Media</a></li>
 				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/retensi'; ?>" class="sidebar-link text-muted pl-lg-5">Retensi</a></li>
 				<li class="sidebar-list-item"><a href="<?php echo base_url().'index.php/master/inaktif'; ?>" class="sidebar-link text-muted pl-lg-5">Inaktif</a></li>
 			</ul>

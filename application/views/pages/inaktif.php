@@ -1,109 +1,93 @@
-<h1><?php echo $judul; ?></h1><hr>
-<?php
-function isSelected($value1, $value2)
-{
-  return $value1==$value2?"selected":"";
-}
-?>
-<?php if (isset($_SESSION['pesan'])) { ?>
-  <div class="alert alert-block alert-info" role="alert">
+<div class="page-holder w-100 d-flex flex-wrap">
+  <div class="container-fluid px-xl-5">
+    <h3 class="mt-5"><?php echo $judul; ?></h3>
+    <?php
+      function isSelected($value1, $value2)
+      {
+        return $value1==$value2?"selected":"";
+      }
+    ?>
+    <?php if (isset($_SESSION['pesan'])) { ?>
+    <div class="alert alert-block alert-info" role="alert">
     <button type="button" class="close" data-dismiss="alert">
       <i class="ace-icon fa fa-times"></i>
     </button>
     <?php echo $this->session->flashdata('pesan'); ?>
-  </div>
-<?php } ?>
-<div class="row">
-  <div class="col-sm-5">
-    <div class="widget-box">
-      <div class="widget-header widget-header-flat">
-        <h4 class="widget-title smaller">Tambah Data Jadwal Inaktif</h4>
-      </div>
-      <div class="widget-body">
-        <div class="widget-main">
-          <form class="form-horizontal" method="post" action="<?php echo base_url().'index.php/master/inaktif_act/tambah' ?>">
-            <div class="form-group">
-              <label class='col-sm-3 control-label no-padding-right' for='id'>ID</label>
-              <div class='col-sm-9'>
-                <input type='text' id='id' name="id" placeholder='ID' class='col-xs-10 col-sm-9' value="<?php echo $id; ?>" readonly="" required="" />
-              </div>
+    </div>
+    <?php } ?>
+    <section class="py-5">
+      <div class="row">
+        <div class="col-lg-4 mb-5">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="h6 text-uppercase mb-0">Tambah Data Jadwal Inaktif</h3>
             </div>
-            <div class="form-group">
-              <label class='col-sm-3 control-label no-padding-right' for='jenis'>Jenis</label>
-              <div class='col-sm-9'>
-                <select id='jenis' name="jenis" class='col-xs-10 col-sm-9' required="">
-                  <?php foreach ($available_jenis as $j) {
-                    echo "<option value='".$j->ID_JENIS."'>".$j->NAMA."</option>";
-                  } ?>
-                </select>
-              </div>
+            <div class="card-body">
+              <form class="form-horizontal" method="post" action="<?php echo base_url().'index.php/master/inaktif_act/tambah' ?>">
+                <input type="hidden" id='id' name="id" />
+                <div class="form-group">       
+                  <label class="form-control-label text-uppercase">Jenis</label>
+                  <div class="select mb-3">
+                    <select class="form-control" id='jenis' name="jenis" placeholder='Jenis'>
+                      <?php foreach ($all_jenis as $j) {
+                        echo "<option value='".$j->ID_JENIS."'>".$j->NAMA."</option>";
+                      } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">       
+                  <label class="form-control-label text-uppercase" for='masa'>Masa Inaktif (Tahun)</label>
+                  <input type='number' id='masa' name="tahun" placeholder='XX' class='form-control' required="" />          
+                </div>
+                <div class="form-group">       
+                    <button type="submit" class="btn btn-primary"><i class="ace-icon fa fa-check"></i> Simpan</button>
+                    <button type="reset" class="btn btn-warning"><i class="ace-icon fa fa-undo"></i> Reset</button>
+                </div>
+              </form>
             </div>
-            <div class="form-group">
-              <label class='col-sm-3 control-label no-padding-right' for='masa'>Masa Inaktif (Tahun)</label>
-              <div class='col-sm-9'>
-                <input type='number' id='masa' name="tahun" placeholder='XX' class='col-xs-10 col-sm-9' required="" />
-              </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 mb-5">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="text-uppercase mb-0">Daftar Jabatan</h6>
             </div>
-            <div class="form-group">
-							<div class="col-md-offset-3 col-md-9">
-								<button class="btn btn-info" type="submit">
-									<i class="ace-icon fa fa-check bigger-110"></i>
-									Simpan
-								</button>
-								&nbsp; &nbsp; &nbsp;
-								<button class="btn" type="reset">
-									<i class="ace-icon fa fa-undo bigger-110"></i>
-									Reset
-								</button>
-							</div>
-						</div>
-          </form>
+            <div class="card-body ">                          
+              <table class="table table-striped table-sm card-text table-center">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Jenis Surat</th>
+                    <th>Masa Inaktif</th>
+                    <th>Opsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $no = 1;
+                  foreach($inaktif as $i) { ?>
+                  <tr>
+                    <th><?php echo $no; ?>.</th>
+                    <td><?php echo $i->JENIS; ?></td>
+                    <td><?php echo $i->MASA_AKTIF; ?> Tahun</td>
+                    <td>
+                      <button class="btn btn-sm btn-info" href="#modal-edit" data-toggle="modal"
+                          onclick="edit('<?php echo $i->ID_INAKTIF; ?>', '<?php echo $i->ID_JENIS; ?>', '<?php echo $i->MASA_AKTIF; ?>')">EDIT</button>
+                      <button class="btn btn-sm btn-danger" href="<?php echo base_url().'index.php/master/inaktif_act/hapus-'.$i->ID_INAKTIF; ?>"
+                          onclick="return confirm('Anda yakin?');">HAPUS</button>
+                    </td>
+                  </tr>
+                  <?php $no++; } ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
-  <div class="col-sm-7">
-    <div class="clearfix">
-			<div class="pull-right tableTools-container"></div>
-		</div>
-		<div class="table-header">
-			Daftar Jadwal Inaktif
-		</div>
-    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Jenis Surat</th>
-          <th>Masa Inaktif</th>
-          <th>Opsi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $no = 1;
-        foreach($inaktif as $i) { ?>
-        <tr>
-          <td style="text-align: right;width: 10%;"><?php echo $no; ?>.</td>
-          <td><?php echo $i->JENIS; ?></td>
-          <td><?php echo $i->MASA_AKTIF; ?> Tahun</td>
-          <td style="text-align: center;width: 20%;">
-            <div class="hidden-sm hidden-xs action-buttons">
-  						<a class="green" href="#modal-edit" data-toggle="modal" role="button"
-                onclick="edit('<?php echo $i->ID_INAKTIF; ?>', '<?php echo $i->ID_JENIS; ?>', '<?php echo $i->MASA_AKTIF; ?>')">
-  							<i class="ace-icon fa fa-pencil bigger-130"></i>
-  						</a>
-
-  						<a class="red" href="<?php echo base_url().'index.php/master/inaktif_act/hapus-'.$i->ID_INAKTIF; ?>" onclick="return confirm('Anda yakin?');">
-  							<i class="ace-icon fa fa-trash-o bigger-130"></i>
-  						</a>
-  					</div>
-          </td>
-        </tr>
-        <?php $no++; } ?>
-      </tbody>
-    </table>
-  </div>
-</div>
+</div>  
 
 <div id="modal-edit" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">

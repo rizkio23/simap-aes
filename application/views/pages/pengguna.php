@@ -1,56 +1,63 @@
-<h1><?php echo $judul; ?></h1><hr>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="clearfix">
-			<div class="pull-right tableTools-container"></div>
-		</div>
-		<div class="table-header">
-			Daftar Pengguna Aplikasi
-      <a href="#modal-tambah" class="btn btn-success btn-sm pull-right" data-toggle="modal" role="button">
-        <i class="menu-icon fa fa-plus"></i>
-        Tambah
-      </a>
-		</div>
-  <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>NIP</th>
-        <th>Nama</th>
-        <th>Email</th>
-        <th>Hak Akses</th>
-        <th>Opsi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($pengguna as $p) { ?>
-      <tr>
-        <td><?php echo $p->NIP; ?></td>
-        <td><?php echo $p->NAMA; ?></td>
-        <td><?php echo $p->EMAIL; ?></td>
-        <td><?php echo $p->PREVILAGE==1?"Admin":"Normal"; ?></td>
-        <td style="text-align: center;">
-          <div class="hidden-sm hidden-xs action-buttons">
-						<a class="blue" href="#modal-lihat" data-toggle="modal" role="button" onclick="lihat(<?php echo $p->ID_PENGGUNA; ?>)">
-							<i class="ace-icon fa fa-search-plus bigger-130"></i>
-						</a>
-
-						<a class="green" href="#modal-edit" data-toggle="modal" role="button" onclick="edit(<?php echo $p->ID_PENGGUNA; ?>)">
-							<i class="ace-icon fa fa-pencil bigger-130"></i>
-						</a>
-
-            <?php if($p->NIP != $this->session->userdata('nip')) { ?>
-						<a class="red" href="<?php echo base_url().'index.php/pengguna/hapus/'.$p->ID_PENGGUNA; ?>" onclick="return confirm('Anda yakin?');">
-							<i class="ace-icon fa fa-trash-o bigger-130"></i>
-						</a>
-            <?php } ?>
-					</div>
-        </td>
-      </tr>
-      <?php } ?>
-    </tbody>
-  </table>
+<div class="page-holder w-100 d-flex flex-wrap">
+  <div class="container-fluid px-xl-5">
+    <h3 class="mt-5"><?php echo $judul; ?></h3>
+    <?php if (isset($_SESSION['pesan'])) { ?>
+    <div class="alert alert-block alert-info" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <i class="ace-icon fa fa-times"></i>
+    </button>
+    <?php echo $this->session->flashdata('pesan'); ?>
+    </div>
+    <?php } ?>
+    <section class="py-5">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-10">
+              <h6 class="text-uppercase mb-0">Daftar Pengguna Aplikasi</h6>
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-sm btn-success pull-right" href="#modal-tambah" data-toggle="modal">Tambah Pengguna</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-sm card-text table-center">
+            <thead>
+              <tr>
+                <th>NIP</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Hak Akses</th>
+                <th>Opsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($pengguna as $p) { ?>
+              <tr>
+                <td><?php echo $p->NIP; ?></td>
+                <td><?php echo $p->NAMA; ?></td>
+                <td><?php echo $p->EMAIL; ?></td>
+                <td><?php echo $p->PREVILAGE==1?"Admin":"Normal"; ?></td>
+                <td>
+                  <button class="btn btn-sm btn-warning" href="#modal-lihat" data-toggle="modal" onclick="lihat(<?php echo $p->ID_PENGGUNA; ?>)">LIHAT</button>
+                  <button class="btn btn-sm btn-info" href="#modal-edit" data-toggle="modal" onclick="edit(<?php echo $p->ID_PENGGUNA; ?>)">EDIT</button>
+                  <?php if($p->NIP != $this->session->userdata('nip')) { ?>
+                  <a href="<?php echo base_url().'index.php/pengguna/hapus/'.$p->ID_PENGGUNA; ?>">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin?');">HAPUS</button>                  
+                  </a>
+                  <button class="btn btn-sm btn-danger" href="#modal-edit" data-toggle="modal" onclick="edit(<?php echo $p->ID_PENGGUNA; ?>)">EDIT</button>
+                  <?php } ?>
+                </td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>    
+        </div>
+      </div>
+    </section>
   </div>
-</div>
+</div>  
 
 <div id="modal-tambah" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
@@ -151,51 +158,4 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  function lihat(id) {
-    $.ajax({
-      url: '<?php echo base_url()."index.php/pengguna/lihat/" ?>' + id,
-      type: 'GET',
-      success: function(result) {
-        $('#lihat').html(result);
-      },
-      error: function(xhr, status, error) {
-        $('#lihat').html("Terjadi kesalahan!");
-      }
-    })
-  }
 
-  function edit(id) {
-    $.ajax({
-      url: '<?php echo base_url()."index.php/pengguna/edit/" ?>' + id,
-      type: 'GET',
-      success: function(result) {
-        $('#edit').html(result);
-      },
-      error: function(xhr, status, error) {
-        $('#edit').html("Terjadi kesalahan!");
-      }
-    })
-  }
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#btn-simpan').attr('disabled', true);
-    $('#nip').change(function() {
-      var nip = $(this).val();
-      $.ajax({
-        url: '<?php echo base_url()."index.php/pengguna/cari_karyawan"; ?>',
-        type: 'POST',
-        data: {'nip': nip},
-        success: function(result) {
-          $('#nama').val(result);
-          $('#btn-simpan').attr('disabled', false);
-        },
-        error: function(xhr, status, error) {
-          $('#nama').val('');
-          $('#btn-simpan').attr('disabled', true);
-        }
-      });
-    });
-  });
-</script>

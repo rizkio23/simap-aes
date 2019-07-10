@@ -17,7 +17,6 @@
                       <th>Perihal</th>
                       <th>Dari</th>
                       <th>Kepada</th>
-                      <th>Keterangan</th>
                       <th>Tanggal Arsip</th>
                       <th>Tanggal Masuk</th>
                       <th>Opsi</th>
@@ -33,7 +32,6 @@
                       <td><?php echo $s->PERIHAL; ?></td>
                       <td><?php echo $s->DARI; ?></td>
                       <td><?php echo $s->KEPADA; ?></td>
-                      <td><?php echo $s->KETERANGAN; ?></td>
                       <td><?php echo date("d-m-Y", strtotime($s->TANGGAL)); ?></td>
                       <td><?php echo date("d-m-Y", strtotime($s->TANGGAL_MASUK)); ?></td>
                       <td>

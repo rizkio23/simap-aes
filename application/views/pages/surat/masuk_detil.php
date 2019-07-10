@@ -8,7 +8,7 @@
           <div class="card-header">
             <h6 class="text-uppercase mb-0">Detil Surat Masuk</h6>
             </div>
-            <div class="card-body ">                          
+            <div class="card-body ">                              
               <div class="row">
                 <div class="col-md-6">
                   <input type='hidden' id='id' name="id" placeholder='ID Surat' required="" readonly="" />

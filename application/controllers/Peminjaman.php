@@ -15,7 +15,6 @@ class Peminjaman extends CI_Controller
     $this->m_security->check();
     $data['judul'] = "Peminjaman Arsip";
     $data['konten'] = "pages/surat/peminjaman";
-
     $data['surat'] = $this->m_surat->get_all();
     $data['pegawai'] = $this->m_pegawai->get_all();
     $data['tanggal_kembali'] = date("d-m-Y", strtotime(date("d-m-Y").'4 days'));

@@ -1,17 +1,17 @@
-<h1><?php echo $judul; ?></h1>
-<div class="col-md-12">
-  <div class="widget-box">
-    <div class="widget-header widget-header-flat">
-      <h4 class="widget-title smaller">Filter</h4>
-    </div>
-    <div class="widget-body">
-      <div class="widget-main">
-        <form method="post" action="<?php echo base_url().'index.php/laporan/filter'; ?>"
-          class="form-horizontal" role="form" target="_blank">
-          <div class='form-group'>
-            <label class='col-sm-1 control-label no-padding-right' for='laporan'>Laporan</label>
-            <div class='col-sm-4'>
-              <select class="form-control" id="laporan" name="laporan" required="">
+<div class="page-holder w-100 d-flex flex-wrap">
+  <div class="container-fluid px-xl-5">
+    <h3 class="mt-5"><?php echo $judul; ?></h3>
+    <section class="py-5">
+       <div class="col-lg-12 mb-5">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="h6 text-uppercase mb-0">Unduh Laporan</h3>
+          </div>
+          <div class="card-body">
+          <div class="form-group">
+          <form action="<?php echo base_url().'index.php/laporan/filter'; ?>" method="post" class="form-horizontal">
+            <label class="form-control-label text-uppercase">Laporan</label>
+            <select class="form-control" id="laporan" name="laporan" required="">
                 <option></option>
                 <option value="1">Surat Masuk</option>
                 <option value="2">Surat Keluar</option>
@@ -20,47 +20,25 @@
                 <option value="5">Arsip Inaktif</option>
                 <option value="6">Retensi Arsip</option>
               </select>
-            </div>
-          </div>
-          <div class='form-group'>
-            <label class='col-sm-1 control-label no-padding-right' for='tgl_1'>Mulai</label>
-            <div class='col-sm-3'>
-              <div class="input-group">
-                <input class="form-control date-picker" id="tgl_1" name="tgl_1" type="text" data-date-format="dd-mm-yyyy"
-                  value="<?php echo date("d-m-Y"); ?>" required="" />
-                <span class="input-group-addon">
-                  <i class="fa fa-calendar bigger-110"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class='form-group'>
-            <label class='col-sm-1 control-label no-padding-right' for='tgl_2'>Sampai</label>
-            <div class='col-sm-3'>
-              <div class="input-group">
-                <input class="form-control date-picker" id="tgl_2" name="tgl_2" type="text" data-date-format="dd-mm-yyyy"
-                  value="<?php echo date("d-m-Y"); ?>" required="" />
-                <span class="input-group-addon">
-                  <i class="fa fa-calendar bigger-110"></i>
-                </span>
-              </div>
-            </div>
           </div>
           <div class="form-group">
-						<div class="col-md-offset-1 col-md-11">
-              <button class="btn btn-info" type="submit">
-								<i class="ace-icon fa fa-file bigger-110"></i>
-								PDF
-							</button>
-							&nbsp; &nbsp; &nbsp;
-							<button class="btn" type="reset">
-								<i class="ace-icon fa fa-undo bigger-110"></i>
-								Reset
-							</button>
-            </div>
+            <label class="form-control-label text-uppercase">Mulai</label>
+            <input class="form-control" id="tgl_1" name="tgl_1" type="date" data-date-format="dd-mm-yyyy" value="<?php echo date("d-m-Y"); ?>" required="" />
           </div>
-        </form>
+          <div class="form-group">
+            <label class="form-control-label text-uppercase">Sampai</label>
+            <input class="form-control" id="tgl_2" name="tgl_2" type="date" data-date-format="dd-mm-yyyy" value="<?php echo date("d-m-Y"); ?>" required="" />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-info pull-right" type="submit">
+              <i class="ace-icon fa fa-file bigger-110"></i>
+              Unduh
+            </button>
+          </div>
+          </form>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
-</div>
+</div>  

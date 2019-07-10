@@ -54,7 +54,39 @@ class M_Riwayat_Inaktif extends CI_Model
     );
   }
 
-  
+  public function status_check()
+  {
+    // lihat tanggal sekarang dari sistem
+    $tgl_sekarang = date_create(date("Y-m-d"));
+    // ambil data dari tabel riwayat inaktif
+    $riwayat_inaktif = $this->get_all();
+    // lakukan pembacaan setiap data dari data yang diambil
+    foreach ($riwayat_inaktif as $ri) {
+      $id = $ri->ID;
+      $tgl_inaktif = date_create(date("Y-m-d", strtotime($ri->TANGGAL_INAKTIF)));
+      $tgl_aktif_kembali = date_create(date("Y-m-d", strtotime($ri->TANGGAL_AKTIF_KEMBALI)));
+      // hitung selisih antara tanggal sekarang dan tanggal inaktif
+      $diff1 = date_diff($tgl_sekarang, $tgl_inaktif);
+      // hitung selisih antara tanggal sekarang dan tanggal aktif kembali
+      $diff2 = date_diff($tgl_sekarang, $tgl_inaktif);
+      // cek apakah sudah diaktifkan kembali atau tidak
+      if (!empty($ri->TANGGAL_AKTIF_KEMBALI) || $ri->TANGGAL_AKTIF_KEMBALI != '0000-00-00') {
+        // update data jika nilai selisih tanggal negatif
+        if ((int) $diff1->format("%R%a") < 0) {
+          $this->db->where("id", $id);
+          $this->db->update("riwayat_inaktif", array("status" => 1));
+        }
+      } else {
+        // update data jika nilai selisih tanggal negatif
+        if ((int) $diff2->format("%R%a") < 0) {
+          $this->db->where("id", $id);
+          $this->db->update("riwayat_inaktif", array("status" => 1));
+        }
+      }
+      // end if
+    }
+    // end foreach
+  }
 
   public function change_status($id_surat, $status)
   {

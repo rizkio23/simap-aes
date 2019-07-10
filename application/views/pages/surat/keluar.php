@@ -53,13 +53,17 @@
                     <label class="form-control-label text-uppercase">Tanggal Surat Masuk</label>
                     <input class="form-control" id="tgl_masuk" name="tgl_masuk" type="date" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y') ?>" />
     						  </div>
-                  <div class="form-group">
-                    <label class="form-control-label text-uppercase">Unggah Surat</label>
-                    <input type='file' multiple="" id='surat' name="surat[]" class='form-control file' required="" />
-    						  </div>
                 </div>  
 
                 <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label text-uppercase">Unggah Surat</label>
+                    <input type='file' multiple="" name="surat" class='form-control' required="" />
+    						  </div>
+                  <div class="form-group">
+                    <label class="form-control-label text-uppercase">Password Surat</label>
+                    <input type='password' name="pass" class='form-control' required="" />
+                  </div>
                   <div class="form-group">
                     <label class="form-control-label text-uppercase" for='jenis'>Jenis Surat</label>
                     <select id='jenis' name="jenis" class='form-control form-control' required="">
@@ -78,20 +82,11 @@
                     <input type='text' id='retensi' name="retensi" placeholder='DD-MM-YYYY' class='form-control' required="" readonly="" />
     						  </div>
                   <div class="form-group">
-                    <label class="form-control-label text-uppercase">Lokasi Penyimpanan</label>
-                    <select id='lokasi' name="lokasi" class='form-control form-control' required="">
-                      <option></option>
-                      <?php foreach ($lokasi as $l) {
-                        echo "<option value='".$l->ID_LOKASI."'>".$l->NAMA."</option>";
-                      } ?>
-                    </select>
-    						  </div>
-                  <div class="form-group">
                     <label class="form-control-label text-uppercase">Keterangan</label>
                     <textarea id='ket' name="ket" placeholder='Keterangan' class='form-control' rows="9"></textarea>
     						  </div>
                   <div class="form-group">       
-                    <button type="submit" class="btn btn-primary"><i class="ace-icon fa fa-check"></i> Simpan</button>
+                    <button type="submit" name="enkripfile" class="btn btn-primary"><i class="ace-icon fa fa-check"></i> Simpan</button>
                     <a href="<?php echo base_url().'index.php/surat/masuk_list'; ?>">
                       <button type="button" class="btn btn-warning"><i class="ace-icon fa fa-undo"></i> Lihat Daftar Surat Masuk</button>
                     </a>
